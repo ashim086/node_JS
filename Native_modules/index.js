@@ -15,7 +15,7 @@ const fs= require("fs");
 
 
 //to user this syntax fs.readfile write fs.readfile(".nameoffile","utf8",(function))
-fs.readFile("./message.txt","utf-8",(err,data) =>{
+fs.readFile("./fileread.txt","utf-8",(err,data) =>{
     if(err) throw err;
     console.log(data);
 
