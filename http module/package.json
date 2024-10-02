@@ -7,5 +7,12 @@
   },
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "nodemon": "^3.1.7",
+    "tailwindcss":"3.4.13"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.13"
+  }
 }

@@ -1,27 +1,38 @@
+//exporting modules
+
 const http=require("http");
 const fs=require("fs");
+const { error } = require("console");
+
+//inserting html
+const home  =fs.readFileSync('./htmlpages/index.html');
+const signup    =   fs.readFileSync('./htmlpages/signup.html')
 
 
-const home  =fs.readFileSync('./index.html');
-
+//creating server request
 const myserver= http.createServer((req,res) =>  {
-    switch (req.url) {
-        case '/':
-            res.writeHead(200, {'content-type': 'text/html'});
-            res.write(home);
-            res.end();
-            break;
-        case '/about':
-            res.end("Hi my name is ashim thapa magar");
     
-        default:
-            res.end("404 error found")
-            break;
-    }
+
+    
+            if(req.method === "GET" && req.url==='/'){
+            res.writeHead(500, {'content-type': 'text/html'});
+            res.write(home);
+            res.end();}
+            else if(req.url==='/signup')
+            {  res.writeHead(500, {'content-type': 'text/html'});
+            res.write(signup);
+            res.end();}
+            else {
+                // 404: Page not found
+                res.writeHead(404, { 'Content-Type': 'text/html' });
+                res.end('<h1>404: Page not found</h1>');
+            }
+    
+    
 });
 
 
-
+//defining server
 myserver.listen(5000,   ()  =>{
     console.log("server at 5000");
 });
