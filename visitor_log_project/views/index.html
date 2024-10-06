@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor Log</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <h1>Visitor Log</h1>
+    
+    <h3>Add New Visitor</h3>
+    <form action="/add-visitor" method="POST">
+        <input type="text" name="name" placeholder="Name" required>
+        <input type="date" name="visitDate" required>
+        <button type="submit">Add Visitor</button>
+    </form>
+
+    <h3>Existing Visitors</h3>
+    <ul>
+        <!-- Visitor entries will be dynamically rendered from the server -->
+        {{visitorList}}
+    </ul>
+</body>
+</html>
