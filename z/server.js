@@ -1,38 +1,64 @@
-const http=require('http');
-const fs=require('fs');
-const data1={
-    name:"ashim",
-    roll_name:28
-};
-const writee=JSON.stringify(data1);
-const filePath=(`${__dirname}`+'/'+'data.json');
+const http = require('http');
+const fs =require('fs');
+const path = './storage.json';
+ 
+
+if (!fs.existsSync(path)) 
+{fs.writeFileSync(path,JSON.stringify([]));
+}
+  
 
 
-const read=fs.readFileSync(filePath,"utf-8");
+
 
 
 
 
 const server=http.createServer((req,res)=>{
-    
-const dr=JSON.parse(read);
-console.log(dr);
-
-const write=fs.writeFile("data.json",writee,(err)=>{
-    console.log(write);
-});
-
 
     if(req.url==="/"&&req.method==="GET"){
-        const write=fs.writeFile("data.json",data,(err)=>{
-            console.log("entered data");
-          });
     res.end("hi");}
     else if(req.url==="/data"&&req.method==="GET")
-    {  
+    { 
+        fs.readFile("storage.json","utf-8",(err,data2)=>{
+        if(err) throw err;
+        else{
+            console.log(data2);
         res.statusCode = 200;
-        res.setHeader('Content-Type', 'application/json');s
-        res.end(JSON.stringify(readData));
+        res.setHeader('Content-Type', 'application/json');
+        res.end(data2);
+        }
+    });
+    }
+    else if(req.url==="/add" && req.method==="POST"){
+        let body='';
+        req.on('data', chunk => {
+            body += chunk.toString();
+        });
+        req.on('end', () => {
+            try {
+                const newEntry = JSON.parse(body); // Parse the incoming data as JSON
+                
+                // Write the new entry to the file, replacing the existing content
+                fs.writeFile(path, JSON.stringify(newEntry, null, 2), (err) => {
+                    if (err) {
+                        res.statusCode = 500;
+                        res.end("Error writing the file");
+                    } else {
+                        res.statusCode = 200;
+                        res.end("Data replaced successfully");
+                    }
+                });
+            } catch (error) {
+                res.statusCode = 400;
+                res.end("Invalid JSON format");
+            }
+        });
+    }
+
+    else {
+        res.statusCode = 404;
+        res.end("Not Found");
     }
 });
 
@@ -41,5 +67,5 @@ const write=fs.writeFile("data.json",writee,(err)=>{
 
 
 server.listen(4500, () => {
-    console.log('Server is running on http://localhost:3000');
+    console.log('Server is running on http://localhost:4500');
 });

@@ -13,7 +13,7 @@ fs.writeFile("storage.json",data,(err)=>{
     console.log(data);
 });
 
-fs.readFile("storage.json","utf-8",(err,data)=>{
+const read=fs.readFile("storage.json","utf-8",(err,data)=>{
     if(err) throw err;
 const data2=JSON.parse(data);
     console.log(data2);
