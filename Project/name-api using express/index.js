@@ -17,6 +17,12 @@ app
     console.log(userdata);
     return res.json(userdata);
 });
+
+app.get("/data", (req, res) => {
+    
+    return res.json(path);
+});
+
 app.post("/add",(req,res)=>{
     const newentry=req.body;
     path.push({...newentry,id:path.length+1});
